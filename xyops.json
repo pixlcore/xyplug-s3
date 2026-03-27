@@ -10,14 +10,14 @@
 				"title": "S3 Toolbox",
 				"enabled": true,
 				"type": "event",
-				"command": "npx -y @pixlcore/xyplug-s3@1.0.1",
+				"command": "npx -y @pixlcore/xyplug-s3@1.0.2",
 				"script": "",
 				"kill": "parent",
 				"notes": "Upload, download, move, copy, list, grep, and delete your files in S3 buckets.",
 				"icon": "aws",
 				"env": { 
-					"AWS_ACCESS_KEY_ID": "Your AWS `accessKeyId` credential.", 
-					"AWS_SECRET_ACCESS_KEY": "Your AWS `secretAccessKey` credential." 
+					"AWS_ACCESS_KEY_ID": "", 
+					"AWS_SECRET_ACCESS_KEY": "" 
 				},
 				"params": [
 					{
