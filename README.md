@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/pixlcore/xyplug-s3/refs/heads/main/logo.png" height="128" alt="S3"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/pixlcore/xyplug-s3/refs/heads/main/logo.png" height="160" alt="S3 Toolbox"/></p>
 <h1 align="center">S3 Toolbox</h1>
 
 An AWS S3 event plugin for the [xyOps Workflow Automation System](https://xyops.io). It can upload, download, move, copy, list, grep, and delete files in S3 buckets, and is designed to work naturally with xyOps job input and output files.

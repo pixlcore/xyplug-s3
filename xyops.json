@@ -10,7 +10,7 @@
 				"title": "S3 Toolbox",
 				"enabled": true,
 				"type": "event",
-				"command": "npx -y @pixlcore/xyplug-s3@1.0.0",
+				"command": "npx -y @pixlcore/xyplug-s3@1.0.1",
 				"script": "",
 				"kill": "parent",
 				"notes": "Upload, download, move, copy, list, grep, and delete your files in S3 buckets.",
