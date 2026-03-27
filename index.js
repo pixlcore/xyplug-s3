@@ -53,7 +53,7 @@ const app = {
 	async tool_uploadFiles() {
 		// upload files to s3
 		let { files } = await this.s3.uploadFiles({ 
-			localPath: './', 
+			localPath: this.params.localPath || './', 
 			remotePath: this.params.remotePath, 
 			filespec: picomatch.makeRe( this.params.filespec || '*' ),
 			compress: this.params.compress || false,
@@ -72,7 +72,7 @@ const app = {
 		// download files from s3
 		let { files, bytes } = await this.s3.downloadFiles({ 
 			remotePath: this.params.remotePath, 
-			localPath: './', 
+			localPath: this.params.localPath || './', 
 			filespec: picomatch.makeRe( this.params.filespec || '*' ),
 			decompress: this.params.decompress || false,
 			strip: this.params.decompress ? /\.gz$/ : undefined,
@@ -84,7 +84,7 @@ const app = {
 		
 		this.sendFinalResponse({ 
 			code: 0,
-			files: files.map( file => Path.basename(file.key) ), 
+			files: this.params.attach ? files.map( file => Path.resolve( this.params.localPath || './', Path.basename(file.key) ) ) : [], 
 			data: { files, bytes } 
 		});
 	},

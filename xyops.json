@@ -49,6 +49,13 @@
 									"description": "Upload job input files to an S3 bucket.",
 									"fields": [
 										{
+											"id": "localPath",
+											"title": "Local Path",
+											"type": "text",
+											"value": "",
+											"caption": "The local path to find files under.  Leave blank to use the job temp directory and job input files."
+										},
+										{
 											"id": "filespec",
 											"title": "Filename Pattern",
 											"type": "text",
@@ -98,6 +105,13 @@
 											"caption": "Optionally filter the remote files using a glob pattern, applied to the filenames."
 										},
 										{
+											"id": "localPath",
+											"title": "Local Path",
+											"type": "text",
+											"value": "",
+											"caption": "The local path to save files in.  Leave blank to use the job temp directory."
+										},
+										{
 											"id": "decompress",
 											"title": "Decompress Files (Gunzip)",
 											"type": "checkbox",
@@ -109,7 +123,14 @@
 											"title": "Delete Files",
 											"type": "checkbox",
 											"value": false,
-											"caption": "Optionally delete all remote files after successful downloading."
+											"caption": "Optionally delete all remote S3 files after successful download."
+										},
+										{
+											"id": "attach",
+											"title": "Attach Files",
+											"type": "checkbox",
+											"value": true,
+											"caption": "Optionally attach all downloaded files to the job output."
 										},
 										{
 											"id": "max",
