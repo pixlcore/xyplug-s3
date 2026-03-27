@@ -1,0 +1,424 @@
+{
+	"type": "xypdf",
+	"description": "xyOps Portable Data Object",
+	"version": "1.0",
+	"items": [
+		{
+			"type": "plugin",
+			"data": {
+				"id": "pmn6zec9v4vn5e7s3",
+				"title": "S3 Utility",
+				"enabled": true,
+				"type": "event",
+				"command": "npx -y @pixlcore/xyplug-s3@1.0.0",
+				"script": "",
+				"kill": "parent",
+				"notes": "Upload, download, move, copy, list, and delete your files in S3 buckets.",
+				"icon": "aws",
+				"env": { 
+					"AWS_ACCESS_KEY_ID": "Your AWS `accessKeyId` credential.", 
+					"AWS_SECRET_ACCESS_KEY": "Your AWS `secretAccessKey` credential." 
+				},
+				"params": [
+					{
+						"id": "region",
+						"title": "Region ID",
+						"type": "text",
+						"value": "us-east-1",
+						"caption": "The AWS Region ID where your bucket resides, e.g. `us-east-1`.",
+						"required": true
+					},
+					{
+						"id": "bucket",
+						"title": "Bucket Name",
+						"type": "text",
+						"value": "",
+						"caption": "The name of your S3 bucket, e.g. `mybucket01`.",
+						"required": true
+					},
+					{
+						"id": "tool",
+						"title": "Tool Select",
+						"type": "toolset",
+						"caption": "",
+						"data": {
+							"tools": [
+								{
+									"id": "uploadFiles",
+									"title": "Upload Files",
+									"description": "Upload job input files to an S3 bucket.",
+									"fields": [
+										{
+											"id": "filespec",
+											"title": "Filename Pattern",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the input files using a glob pattern, applied to the filenames."
+										},
+										{
+											"id": "remotePath",
+											"title": "Remote Path",
+											"type": "text",
+											"value": "",
+											"caption": "The base S3 path to store files under.  Leave blank to store at the root level."
+										},
+										{
+											"id": "compress",
+											"title": "Compress Files (Gzip)",
+											"type": "checkbox",
+											"value": false,
+											"caption": "Optionally gzip-compress all files before upload.  This also adds a `.gz` filename suffix."
+										},
+										{
+											"id": "s3params",
+											"title": "Custom S3 Params",
+											"type": "json",
+											"value": {},
+											"caption": "Optionally specify parameters to the S3 API, for e.g. ACL and Storage Class."
+										}
+									]
+								},
+								{
+									"id": "downloadFiles",
+									"title": "Download Files",
+									"description": "Download S3 files and attach to the job output.",
+									"fields": [
+										{
+											"id": "remotePath",
+											"title": "Remote Path",
+											"type": "text",
+											"value": "",
+											"caption": "The base S3 path to fetch files from.  Leave blank to fetch files at the root level."
+										},
+										{
+											"id": "filespec",
+											"title": "Filename Pattern",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the remote files using a glob pattern, applied to the filenames."
+										},
+										{
+											"id": "decompress",
+											"title": "Decompress Files (Gunzip)",
+											"type": "checkbox",
+											"value": false,
+											"caption": "Optionally decompress all gzipped files after download.  This also strips the `.gz` filename suffix if found."
+										},
+										{
+											"id": "delete",
+											"title": "Delete Files",
+											"type": "checkbox",
+											"value": false,
+											"caption": "Optionally delete all remote files after successful downloading."
+										},
+										{
+											"id": "max",
+											"title": "Maximum Files",
+											"type": "text",
+											"variant": "number",
+											"value": 0,
+											"caption": "Optionally set a maximum number of files to download."
+										},
+										{
+											"id": "sort",
+											"title": "Sort Files",
+											"type": "select",
+											"value": "Newest First [newest], Oldest First [oldest], Largest First [largest], Smallest First [smallest]",
+											"caption": "Optionally sort the files before downloading.  Useful when combined with maximum."
+										}
+									]
+								},
+								{
+									"id": "deleteFiles",
+									"title": "Delete Files",
+									"description": "Delete remote S3 files.",
+									"fields": [
+										{
+											"id": "remotePath",
+											"title": "Remote Path",
+											"type": "text",
+											"value": "",
+											"caption": "The base S3 path to fetch files from.  Leave blank to fetch files at the root level."
+										},
+										{
+											"id": "filespec",
+											"title": "Filename Pattern",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the remote files using a glob pattern, applied to the filenames."
+										},
+										{
+											"id": "older",
+											"title": "Older Than",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the S3 files based on their mod date, so they must be older than the specified number of seconds (or specify a string like `7 days`)."
+										},
+										{
+											"id": "max",
+											"title": "Maximum Files",
+											"type": "text",
+											"variant": "number",
+											"value": 0,
+											"caption": "Optionally set a maximum limit on the number of files to delete."
+										},
+										{
+											"id": "sort",
+											"title": "Sort Files",
+											"type": "select",
+											"value": "Oldest First [oldest], Newest First [newest], Largest First [largest], Smallest First [smallest]",
+											"caption": "Optionally sort the files before deleting.  Useful when combined with maximum."
+										},
+										{
+											"id": "dry",
+											"title": "Dry Run",
+											"type": "checkbox",
+											"value": false,
+											"caption": "When checked, will perform a 'dry run' and not actually perform the deletes."
+										}
+									]
+								},
+								{
+									"id": "moveFiles",
+									"title": "Move Files",
+									"description": "Move remote S3 files to another path and/or bucket.",
+									"fields": [
+										{
+											"id": "remotePath",
+											"title": "Remote Path",
+											"type": "text",
+											"value": "",
+											"caption": "The base S3 path to move files from.  Leave blank to move files from the root level."
+										},
+										{
+											"id": "filespec",
+											"title": "Filename Pattern",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the remote files using a glob pattern, applied to the filenames."
+										},
+										{
+											"id": "destPath",
+											"title": "Destination Path",
+											"type": "text",
+											"value": "",
+											"caption": "The base S3 path to move files to.  Leave blank to keep the same relative path at the destination root."
+										},
+										{
+											"id": "destBucket",
+											"title": "Destination Bucket",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally override the destination bucket name.  Leave blank to use the source bucket configured above."
+										},
+										{
+											"id": "max",
+											"title": "Maximum Files",
+											"type": "text",
+											"variant": "number",
+											"value": 0,
+											"caption": "Optionally set a maximum limit on the number of files to move."
+										},
+										{
+											"id": "sort",
+											"title": "Sort Files",
+											"type": "select",
+											"value": "Oldest First [oldest], Newest First [newest], Largest First [largest], Smallest First [smallest]",
+											"caption": "Optionally sort the files before moving.  Useful when combined with maximum."
+										},
+										{
+											"id": "s3params",
+											"title": "Custom S3 Params",
+											"type": "json",
+											"value": {},
+											"caption": "Optionally specify parameters to the S3 API for the destination objects, for e.g. ACL and Storage Class."
+										},
+										{
+											"id": "dry",
+											"title": "Dry Run",
+											"type": "checkbox",
+											"value": false,
+											"caption": "When checked, will perform a 'dry run' and not actually perform the moves."
+										}
+									]
+								},
+								{
+									"id": "copyFiles",
+									"title": "Copy Files",
+									"description": "Copy remote S3 files to another path and/or bucket.",
+									"fields": [
+										{
+											"id": "remotePath",
+											"title": "Remote Path",
+											"type": "text",
+											"value": "",
+											"caption": "The base S3 path to copy files from.  Leave blank to copy files from the root level."
+										},
+										{
+											"id": "filespec",
+											"title": "Filename Pattern",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the remote files using a glob pattern, applied to the filenames."
+										},
+										{
+											"id": "destPath",
+											"title": "Destination Path",
+											"type": "text",
+											"value": "",
+											"caption": "The base S3 path to copy files to.  Leave blank to keep the same relative path at the destination root."
+										},
+										{
+											"id": "destBucket",
+											"title": "Destination Bucket",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally override the destination bucket name.  Leave blank to use the source bucket configured above."
+										},
+										{
+											"id": "max",
+											"title": "Maximum Files",
+											"type": "text",
+											"variant": "number",
+											"value": 0,
+											"caption": "Optionally set a maximum limit on the number of files to copy."
+										},
+										{
+											"id": "sort",
+											"title": "Sort Files",
+											"type": "select",
+											"value": "Oldest First [oldest], Newest First [newest], Largest First [largest], Smallest First [smallest]",
+											"caption": "Optionally sort the files before copying.  Useful when combined with maximum."
+										},
+										{
+											"id": "s3params",
+											"title": "Custom S3 Params",
+											"type": "json",
+											"value": {},
+											"caption": "Optionally specify parameters to the S3 API for the destination objects, for e.g. ACL and Storage Class."
+										}
+									]
+								},
+								{
+									"id": "listFiles",
+									"title": "List Files",
+									"description": "List remote S3 files with optional filter, and return metadata.",
+									"fields": [
+										{
+											"id": "remotePath",
+											"title": "Remote Path",
+											"type": "text",
+											"value": "",
+											"caption": "The base S3 path to list files from.  Leave blank to list files at the root level."
+										},
+										{
+											"id": "filespec",
+											"title": "Filename Pattern",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the remote files using a glob pattern, applied to the filenames."
+										},
+										{
+											"id": "older",
+											"title": "Older Than",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the S3 files based on their mod date, so they must be older than the specified number of seconds (or specify a string like `7 days`)."
+										},
+										{
+											"id": "newer",
+											"title": "Newer Than",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the S3 files based on their mod date, so they must be newer than the specified number of seconds (or specify a string like `7 days`)."
+										},
+										{
+											"id": "max",
+											"title": "Maximum Files",
+											"type": "text",
+											"variant": "number",
+											"value": 0,
+											"caption": "Optionally set a maximum number of files to return."
+										},
+										{
+											"id": "sort",
+											"title": "Sort Files",
+											"type": "select",
+											"value": "Newest First [newest], Oldest First [oldest], Largest First [largest], Smallest First [smallest]",
+											"caption": "Optionally sort the files before returning metadata."
+										}
+									]
+								},
+								{
+									"id": "grepFiles",
+									"title": "Grep Files",
+									"description": "Search inside remote S3 files for regular expression match.",
+									"fields": [
+										{
+											"id": "remotePath",
+											"title": "Remote Path",
+											"type": "text",
+											"value": "",
+											"caption": "The base S3 path to search under.  Leave blank to search from the root level."
+										},
+										{
+											"id": "filespec",
+											"title": "Filename Pattern",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the remote files using a glob pattern, applied to the filenames."
+										},
+										{
+											"id": "match",
+											"title": "Match Pattern (Regex)",
+											"type": "text",
+											"value": "",
+											"caption": "The regular expression pattern to search for inside each remote file.",
+											"required": true
+										},
+										{
+											"id": "decompress",
+											"title": "Decompress Files (Gunzip)",
+											"type": "checkbox",
+											"value": false,
+											"caption": "Automatically decompress all gzipped files during download before searching their contents."
+										},
+										{
+											"id": "older",
+											"title": "Older Than",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the S3 files based on their mod date, so they must be older than the specified number of seconds (or specify a string like `7 days`)."
+										},
+										{
+											"id": "newer",
+											"title": "Newer Than",
+											"type": "text",
+											"value": "",
+											"caption": "Optionally filter the S3 files based on their mod date, so they must be newer than the specified number of seconds (or specify a string like `7 days`)."
+										},
+										{
+											"id": "maxLines",
+											"title": "Maximum Matches",
+											"type": "text",
+											"variant": "number",
+											"value": 1000,
+											"caption": "Optionally stop after this many matching lines have been found."
+										},
+										{
+											"id": "output",
+											"title": "Output Format",
+											"type": "select",
+											"value": "JSON Data [data], Text File [file]",
+											"caption": "Select whether you want the matched lines returned as job JSON data, or attached as a text file."
+										}
+									]
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
+}

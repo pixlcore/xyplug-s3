@@ -1,0 +1,31 @@
+{
+	"name": "@pixlcore/xyplug-s3",
+	"version": "1.0.0",
+	"description": "An AWS S3 utility plugin for the xyOps workflow automation system.",
+	"author": "Joseph Huckaby <jhuckaby@pixlcore.com>",
+	"homepage": "https://github.com/pixlcore/xyplug-s3",
+	"license": "MIT",
+	"bin": {
+		"xyplug-s3": "index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pixlcore/xyplug-s3"
+	},
+	"bugs": {
+		"url": "https://github.com/pixlcore/xyplug-s3/issues"
+	},
+	"keywords": [
+		"xyops",
+		"s3",
+		"aws"
+	],
+	"dependencies": {
+		"picomatch": "4.0.4",
+		"pixl-perf": "^1.0.9",
+		"s3-api": "^2.0.22"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}
