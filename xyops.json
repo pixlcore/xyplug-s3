@@ -7,13 +7,13 @@
 			"type": "plugin",
 			"data": {
 				"id": "pmn6zec9v4vn5e7s3",
-				"title": "S3 Utility",
+				"title": "S3 Toolbox",
 				"enabled": true,
 				"type": "event",
 				"command": "npx -y @pixlcore/xyplug-s3@1.0.0",
 				"script": "",
 				"kill": "parent",
-				"notes": "Upload, download, move, copy, list, and delete your files in S3 buckets.",
+				"notes": "Upload, download, move, copy, list, grep, and delete your files in S3 buckets.",
 				"icon": "aws",
 				"env": { 
 					"AWS_ACCESS_KEY_ID": "Your AWS `accessKeyId` credential.", 
