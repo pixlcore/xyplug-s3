@@ -44,6 +44,7 @@ These parameters are always present regardless of the selected tool:
 |-----------|----------|-------------|
 | `Region ID` | Yes | AWS region containing the bucket, e.g. `us-east-1`. |
 | `Bucket Name` | Yes | The S3 bucket to operate on. |
+| `Custom API Endpoint` | No | Optionally override the S3 API endpoint, for services such as B2, MinIO, RustFS, Garage, SeaweedFS, etc.  Leave blank to use the official AWS S3 endpoint. |
 
 ## General Notes
 
