@@ -48,6 +48,7 @@ These parameters are always present regardless of the selected tool:
 ## General Notes
 
 - `Remote Path` values are S3 key prefixes. Leave blank to operate at the bucket root.
+- Leading slashes are stripped for S3 path fields, so `/incoming/` is treated as `incoming/`.
 - For folder-like prefixes, it is best to include a trailing slash, e.g. `incoming/` or `logs/2026/03/`.
 - `Filename Pattern` uses glob-style matching and is applied to filenames, not full directory paths.
 - `Older Than` and `Newer Than` can be specified as raw seconds or friendly text like `7 days`, `12 hours`, or `30 minutes`.

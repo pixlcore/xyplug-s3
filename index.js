@@ -18,6 +18,7 @@ const app = {
 		for await (const chunk of process.stdin) chunks.push(chunk);
 		this.job = JSON.parse( chunks.join('').trim() );
 		this.params = this.job.params;
+		this.normalizeParams();
 		
 		console.log(`Setting up S3 with bucket: ${this.params.bucket} in region: ${this.params.region}...`);
 		
@@ -192,6 +193,22 @@ const app = {
 			files: (mode == 'file') ? ['matched-lines.txt'] : null,
 			data: { count, matches } 
 		});
+	},
+	
+	normalizeParams() {
+		// S3 keys are object names, not filesystem paths.  A leading slash is
+		// treated as a real key character by S3, but users often type paths like
+		// "/incoming/" from habit.  Normalize S3 prefix params once up front so
+		// all tools share the same friendly behavior.
+		let params = this.params;
+		if (params.remotePath) params.remotePath = this.normalizeS3Path( params.remotePath );
+		if (params.destPath) params.destPath = this.normalizeS3Path( params.destPath );
+	},
+	
+	normalizeS3Path(path) {
+		// Strip only leading slashes.  Interior and trailing slashes are meaningful
+		// for folder-like S3 prefixes, so preserve them exactly as entered.
+		return String(path).replace(/^\/+/, '');
 	},
 	
 	progress(prog) {

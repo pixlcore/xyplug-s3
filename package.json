@@ -1,6 +1,6 @@
 {
 	"name": "@pixlcore/xyplug-s3",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "An AWS S3 utility plugin for the xyOps workflow automation system.",
 	"author": "Joseph Huckaby <jhuckaby@pixlcore.com>",
 	"homepage": "https://github.com/pixlcore/xyplug-s3",

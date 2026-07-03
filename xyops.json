@@ -10,15 +10,11 @@
 				"title": "S3 Toolbox",
 				"enabled": true,
 				"type": "event",
-				"command": "npx -y @pixlcore/xyplug-s3@1.0.2",
+				"command": "npx -y @pixlcore/xyplug-s3@1.0.3",
 				"script": "",
 				"kill": "parent",
 				"notes": "Upload, download, move, copy, list, grep, and delete your files in S3 buckets.",
 				"icon": "aws",
-				"env": { 
-					"AWS_ACCESS_KEY_ID": "", 
-					"AWS_SECRET_ACCESS_KEY": "" 
-				},
 				"params": [
 					{
 						"id": "region",
@@ -26,7 +22,8 @@
 						"type": "text",
 						"value": "us-east-1",
 						"caption": "The AWS Region ID where your bucket resides, e.g. `us-east-1`.",
-						"required": true
+						"required": true,
+						"regex": "^[a-z0-9\\-]+$"
 					},
 					{
 						"id": "bucket",
@@ -34,7 +31,8 @@
 						"type": "text",
 						"value": "",
 						"caption": "The name of your S3 bucket, e.g. `mybucket01`.",
-						"required": true
+						"required": true,
+						"regex": "^[a-z0-9\\.\\-]+$"
 					},
 					{
 						"id": "tool",
