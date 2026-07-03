@@ -22,11 +22,18 @@ const app = {
 		
 		console.log(`Setting up S3 with bucket: ${this.params.bucket} in region: ${this.params.region}...`);
 		
-		// setup s3 instance
-		this.s3 = new S3({
+		let opts = {
 			bucket: this.params.bucket,
 			region: this.params.region
-		});
+		};
+		if (this.params.endpoint) {
+			console.log("Using custom endpoint: " + this.params.endpoint);
+			opts.endpoint = this.params.endpoint;
+			opts.forcePathStyle = true;
+		}
+		
+		// setup s3 instance
+		this.s3 = new S3(opts);
 		
 		// setup logging hook
 		this.s3.attachLogAgent({

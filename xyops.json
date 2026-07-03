@@ -35,6 +35,15 @@
 						"regex": "^[a-z0-9\\.\\-]+$"
 					},
 					{
+						"id": "endpoint",
+						"title": "Custom API Endpoint",
+						"type": "text",
+						"variant": "url",
+						"value": "",
+						"caption": "Optionally override the S3 API endpoint, for services such as B2, MinIO, RustFS, Garage, SeaweedFS, etc.",
+						"required": false
+					},
+					{
 						"id": "tool",
 						"title": "Tool Select",
 						"type": "toolset",
